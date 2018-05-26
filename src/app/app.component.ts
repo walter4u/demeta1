@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { UsersService } from './services/users.service';
 import { timeout } from 'q';
+import { Observable} from 'rxjs';
 
 @Component({
   selector: 'app-root',
@@ -24,9 +25,12 @@ export class AppComponent  implements OnInit {
   }
   ngOnInit() {
     this._users._url = 'https://axgro-demo-server-staging.herokuapp.com/api';
-    this._users.dologin('roman@gutscher.com', '12345678');
-    setTimeout(() => {this.loggedIn(); } , 7000);
-  }
+    this._users.dologin('roman@gutscher.com', '12345678')
+    .subscribe(ret => {
+      if (ret === 2) {
+        this.loggedIn();
+     } } );
+   }
 
 
 }
